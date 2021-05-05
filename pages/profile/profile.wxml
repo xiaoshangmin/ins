@@ -1,0 +1,35 @@
+<!--pages/user/user.wxml-->
+
+<view class="container">
+
+  <view class="l-avatar l-placement-bottom" mut-bind:tap="tapAvatar">
+    <view class="l-avatar-image l-circle l-class" style="width:160rpx;height:160rpx;">
+      <open-data class="open-data" type="userAvatarUrl" />
+    </view>
+    <view class="l-avatar-text l-class-text l-text-class">
+      <open-data class="open-data" type="userNickName" />
+    </view>
+  </view>
+
+  <view class="tip">
+    <!-- <image class="tip-image" src="/images/budget.png"></image> -->
+    <text class="tip-text">关注：3</text><text class="tip-text">赞过：3</text>
+  </view>
+  <view class="main">
+    <van-cell-group border="{{false}}">
+      <van-cell title="我的关注" is-link bindtap="toMyPost" icon="location-o" />
+      <van-cell title="赞过的内容" is-link bindtap="toMyPost" icon="location-o" />
+      <van-cell title="意见反馈" is-link bindtap="toHelp" icon="location-o" />
+      <van-cell title="联系客服" is-link bindtap="toService" icon="location-o" />
+    </van-cell-group>
+
+  </view>
+</view>
+<view class="share-button">
+  <van-button round size="normal" icon="share-o" color="linear-gradient(to right, #d42c9d, #6149f6)"
+    custom-style="padding:0rpx 10rpx;width:60vw;">
+    分享给好友一起使用吧
+  </van-button>
+</view>
+
+<l-tab-bar list="{{list}}" bg-img="https://img.juzibiji.top/20201206200539.png" />
