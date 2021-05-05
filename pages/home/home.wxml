@@ -1,14 +1,14 @@
 <!--pages/home/home.wxml-->
 <view class="l-class card-container card-container-avatar card-container-avatar-left card-container-unfull"
-    wx:for="{{2}}" wx:key="index">
+    wx:for="{{list}}" wx:key="index">
     <view class="card-avatar-top">
         <view class="card-avatar-left" bindtap="toUser">
-            <image mode="aspectFill" class="l-img-class card-img-avatar"
-                src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg" lazy-load>
+            <image mode="aspectFill" class="l-img-class card-img-avatar" src="{{item.userinfo.profile_pic_url}}"
+                lazy-load>
             </image>
             <view class="card-avatar">
-                <text class="l-title-class card-title card-title-avatar">七月</text>
-                <text class="describe">10小时前</text>
+                <text class="l-title-class card-title card-title-avatar">{{item.userinfo.username}}</text>
+                <text class="describe">{{item.create_time}}</text>
             </view>
         </view>
         <van-tag round color="#f3f3f3" text-color="#3963BC" size="large" plain>
@@ -16,21 +16,13 @@
         </van-tag>
     </view>
     <view class="avter-content">
-        很简单，豆瓣现在这样就给大家指了一条明路:以后凡是这种国产的风口浪尖的的片子，会涉及到各方背后利益关系的片子...
+        {{item.node_text}}
     </view>
     <view class="avter-share-img">
         <swiper indicator-dots="true" style="height:120vw;">
-            <swiper-item>
+            <swiper-item wx:for="{{list.urls}}" wx:for-index="idx" wx:for-item="url">
                 <view class="swiper-item">
-                    <image mode="widthFix" style="width:100vw;"
-                        src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg">
-                    </image>
-                </view>
-            </swiper-item>
-            <swiper-item>
-                <view class="swiper-item">
-                    <image mode="widthFix" style="width:100vw;"
-                        src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg">
+                    <image mode="widthFix" style="width:100vw;" src="{{url}}">
                     </image>
                 </view>
             </swiper-item>
@@ -39,12 +31,13 @@
     <view class="avter-share-container">
         <view class="like-container">
             <van-icon name="like-o" color="#666" size="23" />
-            <view class="number">160000次赞</view>
+            <view class="number">{{item.like_count}}次赞</view>
         </view>
         <view class="share-container">
             <van-icon name="share-o" color="#666" size="23" />
         </view>
-        <view class="download-container" bindtap="download" data-src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg,http://cdn.wowyou.cc/179966113_162709649104940_7087972947059416111_n.jpeg">
+        <view class="download-container" bindtap="download"
+            data-src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg,http://cdn.wowyou.cc/179966113_162709649104940_7087972947059416111_n.jpeg">
             <van-icon name="down" color="#666" size="23" />
         </view>
     </view>

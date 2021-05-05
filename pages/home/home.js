@@ -1,29 +1,13 @@
 // pages/home/home.js
+const api = require("../../utils/api");
+const config = require('../../config');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    list: [{
-        pagePath: "/pages/home/home",
-        text: "首页",
-        iconPath: "/images/home.png",
-        selectedIconPath: "/images/home-selected.png"
-      },
-      // {
-      //   pagePath: "/pages/search/search",
-      //   text: "搜索",
-      //   iconPath: "/images/home.png",
-      //   selectedIconPath: "/images/home-selected.png"
-      // },
-      {
-        pagePath: "/pages/user/user",
-        text: "用户",
-        iconPath: "/images/home.png",
-        selectedIconPath: "/images/home-selected.png"
-      }
-    ],
+    list: [],
     urls: [{
       url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
       key: 'key1'
@@ -53,7 +37,7 @@ Page({
   },
   download(e) {
     let src = e.currentTarget.dataset.src
-    let arr = src.split(',') 
+    let arr = src.split(',')
     let self = this
     // 相册授权
     wx.getSetting({
@@ -83,8 +67,6 @@ Page({
         console.log(res);
       }
     })
-
-
   },
 
   saveImage(path) {
@@ -103,23 +85,21 @@ Page({
       }
     })
   },
+  getList() {
+    api.post(config.api.list).then(res => {
+      console.log(res)
+      if (0 == res.code) {
+        this.setData({
+          list: res.data
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    // wx.getImageInfo({
-    //   src: 'http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg',
-    //   success: function (sres) {
-    //   console.log(sres.path);
-    //   wx.saveImageToPhotosAlbum({
-    //     filePath: sres.path,
-    //     success: function (fres) {
-    //     //console.log(fres);
-    //     }
-    //   })
-    //   }
-    // })
+    this.getList()
   },
 
   /**
