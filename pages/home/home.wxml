@@ -15,20 +15,32 @@
             + 关注
         </van-tag>
     </view>
-    <view class="avter-content">
-        {{item.node_text}}
-    </view>
     <view class="avter-share-img">
-        <swiper indicator-dots="true" style="height:120vw;">
-            <swiper-item wx:for="{{list.urls}}" wx:for-index="idx" wx:for-item="url">
+        <swiper indicator-dots="{{item.dots}}" indicator-active-color="blue" style="height:{{item.dimensions.vw_height}}vw;max-height:125vw;">
+            <swiper-item wx:for="{{item.urls}}" wx:for-index="idx" wx:for-item="url">
                 <view class="swiper-item">
-                    <image mode="widthFix" style="width:100vw;" src="{{url}}">
-                    </image>
+                    <block wx:if="{{0 == url.is_video}}">
+                        <image lazy-load mode="widthFix" style="width:100vw;" src="{{url.display_url}}">
+                        </image>
+                    </block>
+                    <block wx:elif="{{1 == url.is_video}}">
+                        <video id="myVideo" src="{{url.video_url}}" binderror="videoErrorCallback"
+                            show-center-play-btn='{{true}}' object-fit="cover" show-play-btn="{{true}}"
+                            picture-in-picture-mode="{{['push', 'pop']}}" show-mute-btn poster="{{url.display_url}}"
+                            controls muted show-fullscreen-btn="{{false}}" show-play-btn="{{false}}"
+                            enable-play-gesture
+                            bindenterpictureinpicture='bindVideoEnterPictureInPicture'
+                            bindleavepictureinpicture='bindVideoLeavePictureInPicture'
+                            style="width:100vw;height:{{item.dimensions.vw_height}}vw;max-height:125vw;"></video>
+                    </block>
                 </view>
             </swiper-item>
         </swiper>
     </view>
-    <view class="avter-share-container">
+    <view class="avter-content">
+        {{item.node_text}}
+    </view>
+    <!-- <view class="avter-share-container">
         <view class="like-container">
             <van-icon name="like-o" color="#666" size="23" />
             <view class="number">{{item.like_count}}次赞</view>
@@ -40,7 +52,7 @@
             data-src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg,http://cdn.wowyou.cc/179966113_162709649104940_7087972947059416111_n.jpeg">
             <van-icon name="down" color="#666" size="23" />
         </view>
-    </view>
+    </view>  -->
 </view>
 
 <l-tab-bar list="{{list}}" bg-img="https://img.juzibiji.top/20201206200539.png" />

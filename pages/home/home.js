@@ -8,26 +8,10 @@ Page({
    */
   data: {
     list: [],
-    urls: [{
-      url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
-      key: 'key1'
-    }, {
-      url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
-      key: 'key2',
-      value: 2
-    }, {
-      url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
-      key: 'key2',
-      value: 2
-    }, {
-      url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
-      key: 'key2',
-      value: 2
-    }, {
-      url: 'http://cdn.wowyou.cc/Fg3eMJmd953weKdCMSr31M0CqKQV',
-      key: 'key2',
-      value: 2
-    }]
+    urls: [],
+    p: 1,
+    ps: 10,
+    finish: false,
   },
 
   toUser() {
@@ -86,13 +70,35 @@ Page({
     })
   },
   getList() {
-    api.post(config.api.list).then(res => {
+    wx.showNavigationBarLoading(); //在标题栏中显示加载图标
+
+    let list = this.data.list;
+    if (this.data.p == 1) {
+      list = [];
+      this.setData({
+        finish: false
+      })
+    }
+    let data = {
+      p: this.data.p,
+      ps: this.data.ps
+    }
+    api.post(config.api.list, data).then(res => {
       console.log(res)
       if (0 == res.code) {
+        let data = res.data
+        list = list.concat(data)
         this.setData({
-          list: res.data
+          list
         })
+        if (data.length < this.data.ps) {
+          this.setData({
+            finish: true
+          })
+        }
       }
+      wx.hideNavigationBarLoading(); //完成停止加载图标
+      wx.stopPullDownRefresh();
     })
   },
   /**
@@ -134,14 +140,23 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.setData({
+      p: 1,
+      ps: 10,
+    })
+    this.getList()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.setData({
+      p: this.data.p + 1,
+    })
+    if (!this.data.finish) {
+      this.getList()
+    }
   },
 
   /**
