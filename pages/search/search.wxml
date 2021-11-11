@@ -1,25 +1,54 @@
-<!--pages/search/search.wxml-->
-<van-sticky>
-  <van-search value="{{ value }}" placeholder="请输入搜索关键词" />
-</van-sticky>
-<van-tree-select items="{{ leftItems }}" height="100vh" main-active-index="{{ mainActiveIndex }}"
-  active-id="{{ activeId }}" bind:click-nav="onClickNav" bind:click-item="onClickItem">
-  <!-- 右边列表 -->
-  <view class="l-class card-container card-container-avatar card-container-avatar-left card-container-unfull"
-    slot="content" wx:for="{{rightItems}}" wx:key="index">
-    <view class="card-avatar-top">
-      <view class="card-avatar-left">
-        <image mode="aspectFill" class="l-img-class card-img-avatar" src="{{item.profile_pic}}" lazy-load>
-        </image>
-        <view class="card-avatar">
-          <text class="l-title-class card-title card-title-avatar">{{item.nickname}}</text>
-          <text class="describe">{{item.username}}</text>
+<view class="container">
+  <!-- 搜索框 -->
+  <view class="search-area">
+    <van-search value="{{ inputValue }}" placeholder="请输入搜索关键词" shape="round" custom-class="search-class"
+      bind:search="onSearch" bind:change="handleInput">
+      <view slot="label" class="label">
+        <view class="type" bindtap="onClickType">
+          <view class="typename">{{typename}}</view>
+          <view class="arrow"></view>
         </view>
       </view>
-      <van-tag round color="#f3f3f3" text-color="#3963BC" size="large" plain>
-        + 关注
-      </van-tag>
+    </van-search>
+  </view>
+
+  <!-- popover -->
+  <view class="popover" style="display: {{showPopover}};">
+    <view class="popover-arrow"></view>
+    <view class="popover-content" bindtap="onClickPopover">
+      <view class="item hairline--bottom" data-type="feel" data-name="表情">表情</view>
+      <view class="item hairline--bottom" data-type="avatar" data-name="头像">头像</view>
+      <view class="item" data-type="wallpaper" data-name="壁纸">壁纸</view>
     </view>
   </view>
 
-</van-tree-select>
+  <!-- 列表 -->
+  <view class="list">
+    <view class="row">
+      <van-row gutter="4">
+        <van-col span="8" wx:for="{{list}}" wx:for-item="item" wx:key="index">
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}"
+            bindtap="onWallpaperItemClick">
+          </van-image>
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'feel' || item.type=='avatar'}}"  data-id="{{item.id}}"
+            custom-class="image" bindtap="onItemClick"></van-image>
+        </van-col>
+      </van-row>
+
+      <!-- <view class="col-4" wx:for="{{list}}">
+        <image wx:if="{{item.type == 'wallpaper'}}" class="wallpaper" src="{{item.url}}" mode="aspectFill"
+          data-id="{{item.id}}" bindtap="onWallpaperItemClick" />
+
+        <image wx:if="{{item.type == 'feel'}}" class="image" src="{{item.url}}" mode="aspectFill" data-id="{{item.id}}"
+          bindtap="onItemClick" />
+
+        <image wx:if="{{item.type == 'avatar'}}" class="image" src="{{item.url}}" mode="aspectFill"
+          data-id="{{item.id}}" bindtap="onItemClick" />
+      </view> -->
+
+    </view>
+  </view>
+
+  <view wx:if="{{finished}}" class="finish">{{finised_text}}</view>
+
+</view>

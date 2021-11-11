@@ -1,0 +1,7 @@
+<view class="container">
+    <image src="{{url}}" mode="widthFix" class="wallpaper" />
+    <view class="operate">
+        <button type="default" size="default" bindtap="saveImageToPhotosAlbum">下载壁纸</button>
+        <button type="primary" size="default" open-type="share">分享好友</button>
+    </view>
+</view>

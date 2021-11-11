@@ -1,58 +1,12 @@
-<!--pages/home/home.wxml-->
-<view class="l-class card-container card-container-avatar card-container-avatar-left card-container-unfull"
-    wx:for="{{list}}" wx:key="index">
-    <view class="card-avatar-top">
-        <view class="card-avatar-left" bindtap="toUser">
-            <image mode="aspectFill" class="l-img-class card-img-avatar" src="{{item.userinfo.profile_pic_url}}"
-                lazy-load>
-            </image>
-            <view class="card-avatar">
-                <text class="l-title-class card-title card-title-avatar">{{item.userinfo.username}}</text>
-                <text class="describe">{{item.create_time}}</text>
-            </view>
-        </view>
-        <van-tag round color="#f3f3f3" text-color="#3963BC" size="large" plain>
-            + 关注
-        </van-tag>
+<view class="container">
+    <view  bindtap="toSearch">
+        <van-search placeholder="请输入搜索关键词"  shape="round" readonly />
     </view>
-    <view class="avter-share-img">
-        <swiper indicator-dots="{{item.dots}}" indicator-active-color="blue" style="height:{{item.dimensions.vw_height}}vw;max-height:125vw;">
-            <swiper-item wx:for="{{item.urls}}" wx:for-index="idx" wx:for-item="url">
-                <view class="swiper-item">
-                    <block wx:if="{{0 == url.is_video}}">
-                        <image lazy-load mode="widthFix" style="width:100vw;" src="{{url.display_url}}">
-                        </image>
-                    </block>
-                    <block wx:elif="{{1 == url.is_video}}">
-                        <video id="myVideo" src="{{url.video_url}}" binderror="videoErrorCallback"
-                            show-center-play-btn='{{true}}' object-fit="cover" show-play-btn="{{true}}"
-                            picture-in-picture-mode="{{['push', 'pop']}}" show-mute-btn poster="{{url.display_url}}"
-                            controls muted show-fullscreen-btn="{{false}}" show-play-btn="{{false}}"
-                            enable-play-gesture
-                            bindenterpictureinpicture='bindVideoEnterPictureInPicture'
-                            bindleavepictureinpicture='bindVideoLeavePictureInPicture'
-                            style="width:100vw;height:{{item.dimensions.vw_height}}vw;max-height:125vw;"></video>
-                    </block>
-                </view>
-            </swiper-item>
-        </swiper>
+    <view class="list">
+        <van-row gutter="4">
+            <van-col span="8" wx:for="{{hotList}}" wx:for-item="item" wx:key="index" bindtap="onItemClick" data-id="{{item.id}}">
+                <van-image src="{{item.url}}" fit="cover" custom-class="image"></van-image>
+            </van-col>
+        </van-row>
     </view>
-    <view class="avter-content">
-        {{item.node_text}}
-    </view>
-    <!-- <view class="avter-share-container">
-        <view class="like-container">
-            <van-icon name="like-o" color="#666" size="23" />
-            <view class="number">{{item.like_count}}次赞</view>
-        </view>
-        <view class="share-container">
-            <van-icon name="share-o" color="#666" size="23" />
-        </view>
-        <view class="download-container" bindtap="download"
-            data-src="http://cdn.wowyou.cc/179982212_3572937446140541_336041814125647551_n.jpeg,http://cdn.wowyou.cc/179966113_162709649104940_7087972947059416111_n.jpeg">
-            <van-icon name="down" color="#666" size="23" />
-        </view>
-    </view>  -->
 </view>
-
-<l-tab-bar list="{{list}}" bg-img="https://img.juzibiji.top/20201206200539.png" />

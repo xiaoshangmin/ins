@@ -7,43 +7,92 @@ Page({
    * 页面的初始数据
    */
   data: {
-    mainActiveIndex: 0,
-    activeId: [],
-    leftItems: [{
-      // 导航名称
-      text: '所有',
-    }, ],
-    rightItems: [],
-  },
-  onClickNav(e) {
-    let detail = this.data.leftItems[e.detail.index]
-    this.getUserList(detail.id)
+    inputValue: "",
+    showPopover: 'none',
+    typename: "表情",
+    type: "feel",
+    finised_text: '暂时只有这么多了',
+    finished: false,
+    p: 1,
+    ps: 10,
+    list: [],
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    api.post(config.api.classification).then(res => {
-      console.log(res)
-      if (0 == res.code) {
-        this.setData({
-          leftItems: res.data
-        })
-      }
-    })
-    this.getUserList(1)
+    this.getSearchList()
   },
+  onSearch() {
+    console.log(this.data.inputValue, this.data.type)
+    if (!this.data.inputValue) {
+      wx.showToast({
+        title: '请输入查询的内容',
+        icon: 'none',
+      });
+      return;
+    }
+    this.setData({
+      finished: false
+    })
+    this.getSearchList();
 
-  getUserList(classId) {
-    api.post(config.api.userList, {
-      classId
-    }).then(res => {
+  },
+  getSearchList() {
+    let data = {
+      p: 1,
+      ps: 10,
+      keyword: this.data.inputValue,
+      type: this.data.type
+    }
+    api.post(config.api.list, data).then(res => {
       console.log(res)
-      if (0 == res.code) {
-        this.setData({
-          rightItems: res.data
-        })
-      }
+      this.setData({
+        list: res.data
+      })
+    }).catch(res => {
+
+    });
+  },
+  handleInput(event) {
+    const value = event.detail;
+    this.setData({
+      inputValue: value,
+    });
+  },
+  onItemClick(event) {
+    console.log(event)
+    var id = event.target.dataset.id;
+    wx.navigateTo({
+      url: `/pages/detail/detail?id=${id}`
+    });
+  },
+  onWallpaperItemClick(event) {
+    console.log(event)
+    var id = event.target.dataset.id;
+    wx.navigateTo({
+      url: `/pages/wallpaper/wallpaper?id=${id}`
+    });
+  },
+  onClickType() {
+    if (this.data.showPopover == 'block') {
+      this.setData({
+        showPopover: 'none'
+      })
+    } else {
+      this.setData({
+        showPopover: 'block'
+      })
+    }
+  },
+  onClickPopover(event) {
+    let type = event.target.dataset.type
+    let name = event.target.dataset.name
+    console.log(type)
+    this.setData({
+      showPopover: 'none',
+      typename: name,
+      type: type
     })
   },
 
@@ -86,7 +135,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.data.finished) {
+      return;
+    }
+    this.setData({
+      finished: true
+    })
   },
 
   /**
