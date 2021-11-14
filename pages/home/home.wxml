@@ -4,7 +4,7 @@
     </view>
     <view class="list">
         <van-row gutter="4">
-            <van-col span="8" wx:for="{{hotList}}" wx:for-item="item" wx:key="index" bindtap="onItemClick" data-id="{{item.id}}">
+            <van-col span="8" wx:for="{{hotList}}" wx:for-item="item" wx:key="index" bindtap="onItemClick" data-id="{{item.id}}" data-src="{{item.url}}">
                 <van-image src="{{item.url}}" fit="cover" custom-class="image"></van-image>
             </van-col>
         </van-row>

@@ -27,25 +27,13 @@
     <view class="row">
       <van-row gutter="4">
         <van-col span="8" wx:for="{{list}}" wx:for-item="item" wx:key="index">
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}"
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}" data-src="{{item.url}}"
             bindtap="onWallpaperItemClick">
           </van-image>
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'feel' || item.type=='avatar'}}"  data-id="{{item.id}}"
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'feel' || item.type=='avatar'}}"  data-id="{{item.id}}" data-src="{{item.url}}"
             custom-class="image" bindtap="onItemClick"></van-image>
         </van-col>
       </van-row>
-
-      <!-- <view class="col-4" wx:for="{{list}}">
-        <image wx:if="{{item.type == 'wallpaper'}}" class="wallpaper" src="{{item.url}}" mode="aspectFill"
-          data-id="{{item.id}}" bindtap="onWallpaperItemClick" />
-
-        <image wx:if="{{item.type == 'feel'}}" class="image" src="{{item.url}}" mode="aspectFill" data-id="{{item.id}}"
-          bindtap="onItemClick" />
-
-        <image wx:if="{{item.type == 'avatar'}}" class="image" src="{{item.url}}" mode="aspectFill"
-          data-id="{{item.id}}" bindtap="onItemClick" />
-      </view> -->
-
     </view>
   </view>
 

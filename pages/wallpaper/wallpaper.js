@@ -8,9 +8,9 @@ Page({
     onLoad: function(options) {
         console.log(options)
         this.setData({
-            id: options.id
+            url: options.url
         })
-        this.getDetail()
+        // this.getDetail()
     },
     onShareAppMessage: function() {
         // return custom share data when user share.

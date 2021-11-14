@@ -62,16 +62,18 @@ Page({
   },
   onItemClick(event) {
     console.log(event)
-    var id = event.target.dataset.id;
+    let id = event.target.dataset.id;
+    let url = event.target.dataset.src;
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`
+      url: `/pages/detail/detail?url=${url}`
     });
   },
   onWallpaperItemClick(event) {
     console.log(event)
-    var id = event.target.dataset.id;
+    let id = event.target.dataset.id;
+    let url = event.target.dataset.src;
     wx.navigateTo({
-      url: `/pages/wallpaper/wallpaper?id=${id}`
+      url: `/pages/wallpaper/wallpaper?url=${url}`
     });
   },
   onClickType() {

@@ -13,9 +13,6 @@ Page({
     ps: 10,
     finish: false,
   },
-
-
-
   getHotList() {
     api.get(config.api.hot).then(res => {
       console.log(res)
@@ -29,8 +26,9 @@ Page({
   onItemClick(event) {
     console.log(event)
     var id = event.currentTarget.dataset.id;
+    var url = event.currentTarget.dataset.src;
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`,
+      url: `/pages/detail/detail?url=${url}`,
       success(res) {
         console.log(res);
       },

@@ -69,9 +69,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      id: options.id
+      url: options.url
     })
-    this.getDetail()
+    // this.getDetail()
   },
 
   /**
