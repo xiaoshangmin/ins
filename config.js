@@ -1,18 +1,28 @@
-let local_host = "http://xsm.club.com/api/v1";
-let alpha_host = "https://api.wowyou.cc/api/v1";
-let host = 'https://api.wowyou.cc/api/v1';
-let qiniu_host = 'https://cdn.wowyou.cc';
+let serve_id = 'a87ff679a2f3e71d9181a67b7542122c';
+let app_name = 'emoji';
+let localhost = 'http://xsm.saas.com';
+let alpha_host = 'https://api.wowyou.cc';
+let cdn_host = 'https://cdn.wowyou.cc';
+let base_url = `${localhost}/${app_name}/v1`;
+let auth_url = `${localhost}/api/v1`;
 const accountInfo = wx.getAccountInfoSync();
-if (accountInfo.miniProgram.envVersion == "develop") {
-  host = alpha_host;
+if (accountInfo.miniProgram.envVersion != "develop") {
+  base_url = `${alpha_host}/${app_name}/v1`;
+  auth_url = `${alpha_host}/api/v1`;
 }
-console.log(host)
+console.log(base_url,accountInfo)
 let config = {
+  saas: {
+    serve_id,
+    app_name,
+  },
   api: {
-    host,
-    hot: `${host}/club/hot`,
-    list: `${host}/club/list`,
-    detail: `${host}/club/detail`,
+    cdn_host,
+    base_url,
+    auth_url,
+    hot: `/club/hot`,
+    list: `/club/list`,
+    detail: `/club/detail`,
   }
 };
 module.exports = config
