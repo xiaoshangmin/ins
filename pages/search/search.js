@@ -14,8 +14,9 @@ Page({
     finised_text: '暂时只有这么多了',
     finished: false,
     p: 1,
-    ps: 10,
+    ps: 20,
     list: [],
+    list_type: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -24,15 +25,16 @@ Page({
     this.getSearchList()
   },
   onSearch() {
-    console.log(this.data.inputValue, this.data.type)
-    if (!this.data.inputValue) {
-      wx.showToast({
-        title: '请输入查询的内容',
-        icon: 'none',
-      });
-      return;
-    }
+    // if (!this.data.inputValue) {
+    //   wx.showToast({
+    //     title: '请输入查询的内容',
+    //     icon: 'none',
+    //   });
+    //   return;
+    // }
     this.setData({
+      p: 1,
+      list: [],
       finished: false
     })
     this.getSearchList();
@@ -40,16 +42,23 @@ Page({
   },
   getSearchList() {
     let data = {
-      p: 1,
-      ps: 10,
+      p: this.data.p,
+      ps: this.data.ps,
       keyword: this.data.inputValue,
       type: this.data.type
-    }
-    api.post(config.api.list, data).then(res => {
-      console.log(res)
+    } 
+    let list = this.data.list
+    api.post(config.api.list, data, true).then(res => {
+      list = list.concat(res.data.list)
       this.setData({
-        list: res.data
+        list,
+        list_type: res.data.type
       })
+      if (res.data.total <= this.data.p) {
+        this.setData({
+          finished: true
+        })
+      }
     }).catch(res => {
 
     });
@@ -137,12 +146,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.data.finished) {
-      return;
+    if (!this.data.finished) {
+      this.setData({
+        p: this.data.p + 1,
+      })
+      this.getSearchList()
     }
-    this.setData({
-      finished: true
-    })
   },
 
   /**

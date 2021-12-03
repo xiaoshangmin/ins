@@ -1,7 +1,7 @@
 let serve_id = 'a87ff679a2f3e71d9181a67b7542122c';
 let app_name = 'emoji';
 let localhost = 'http://xsm.saas.com';
-let alpha_host = 'https://api.wowyou.cc';
+let alpha_host = 'https://saas.wowyou.cc';
 let cdn_host = 'https://cdn.wowyou.cc';
 let base_url = `${localhost}/${app_name}/v1`;
 let auth_url = `${localhost}/api/v1`;
@@ -23,6 +23,7 @@ let config = {
     hot: `/club/hot`,
     list: `/club/list`,
     detail: `/club/detail`,
+    config: `/club/config`,
   }
 };
 module.exports = config
