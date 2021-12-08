@@ -1,14 +1,15 @@
 <view class="container">
 
-<view class="content">
-    <image class="image" src="{{url}}" mode="aspectFit"/>
-</view>
+    <view class="content">
+        <image class="image" src="{{url}}" mode="aspectFit" />
+    </view>
 
-<view class="operate">
-    <button type="default" class="download-btn"  bindtap="saveImageToPhotosAlbum">
-        <icon class="tt-icon" size="23" type="download"></icon>保存表情包
-    </button>
-    <button type="primary"  open-type="share">
-        <icon class="tt-icon" size="23" ></icon>分享给好友</button>
-</view> 
+    <view class="operate">
+        <van-button type="default" icon="down" bindtap="saveImageToPhotosAlbum">
+            保存表情包
+        </van-button>
+        <van-button type="primary" icon="share-o" open-type="share">
+        分享给好友
+        </van-button>
+    </view>
 </view>

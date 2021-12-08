@@ -33,14 +33,14 @@ Page({
         console.log(res);
       },
       fail(res) {
-        console.log("navigateTo调用失败"+id);
+        console.log("navigateTo调用失败" + id);
       },
     });
   },
-  toSearch() { 
+  toSearch() {
     wx.navigateTo({
       url: '/pages/search/search',
-    }) 
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -80,13 +80,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    this.setData({
-      p: 1,
-      ps: 10,
-    })
-    this.getList()
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数

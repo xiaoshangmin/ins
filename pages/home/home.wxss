@@ -1,7 +1,7 @@
 /* pages/home/home.wxss */
 .container {
-  margin-bottom: 150rpx;
-  padding-top: 188rpx;
+  margin-bottom: 50rpx;
+  /* padding-top: 188rpx; */
 }
 .list {
   margin-left: 30rpx;
