@@ -80,13 +80,13 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-    this.setData({
-      p: 1,
-      ps: 10,
-    })
-    this.getList()
-  },
+  // onPullDownRefresh: function () { 
+    // this.setData({
+    //   p: 1,
+    //   ps: 10,
+    // })
+    // this.getHotList()
+  // },
 
   /**
    * 页面上拉触底事件的处理函数
