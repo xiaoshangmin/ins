@@ -118,7 +118,7 @@
 
 .finish {
   text-align: center; 
-  padding-top: 50rpx;
+  padding-top: 30rpx;
   color: rgb(57, 105, 196);
   display: block;
   position: relative;
@@ -130,7 +130,7 @@
   position: absolute;
   width: 20%;
   height: 1rpx;
-  top: 24%;
+  top: 65%;
   left: 11%;
 }
 
@@ -140,6 +140,6 @@
   position: absolute;
   width: 20%;
   height: 1px;
-  top: 24%;
+  top: 65%;
   right: 11%;
 }

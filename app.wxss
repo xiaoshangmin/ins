@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }  */
 page{
-  margin-bottom: 50px; 
+  margin-bottom: 50rpx; 
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
     Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
     sans-serif;

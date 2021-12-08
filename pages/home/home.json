@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "离谱表情包",
-  "onReachBottomDistance": 500,
+  "navigationBarTitleText": "离谱表情包", 
   "usingComponents": {
     "van-search": "@vant/weapp/search/index",
     "van-row": "@vant/weapp/row/index",

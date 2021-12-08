@@ -27,10 +27,10 @@
     <view class="row">
       <van-row gutter="4">
         <van-col span="8" wx:for="{{list}}" wx:for-item="item" wx:key="index">
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}" data-src="{{item.url}}"
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}" data-src="{{item.url}}"
             bindtap="onWallpaperItemClick">
           </van-image>
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{item.type == 'feel' || item.type=='avatar'}}"  data-id="{{item.id}}" data-src="{{item.url}}"
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'feel' || list_type=='avatar'}}"  data-id="{{item.id}}" data-src="{{item.url}}"
             custom-class="image" bindtap="onItemClick"></van-image>
         </van-col>
       </van-row>

@@ -1,4 +1,5 @@
 {
+  "onReachBottomDistance": 100,
   "usingComponents": { 
     "van-search": "@vant/weapp/search/index",
     "van-image": "@vant/weapp/image/index",
