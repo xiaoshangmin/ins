@@ -24,12 +24,13 @@ const request = (url, data, method, load, auth) => {
       timeout: 15000,
       header: {
         'scopes': 'mini_program',
+        'request-system': 'wx',
         'content-type': 'application/json', //默认 application/json :数据序列化
         "token": session.get('token') || '',
         'request-app': config.saas.serve_id,
       },
       success(res) {
-        console.log(`==============\n请求方法：${method};\n请求参数：${JSON.stringify(data)};\n返回：${JSON.stringify(res)};\n==============`)
+        // console.log(`==============\n请求方法：${method};\n请求参数：${JSON.stringify(data)};\n返回：${JSON.stringify(res)};\n==============`)
         if (res.statusCode === 200) {
           resolve(res.data.data)
         } else {

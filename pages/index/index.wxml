@@ -1,23 +1,22 @@
-<!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <view bindtap="toSearch">
+        <van-search placeholder="请输入搜索关键词" shape="round" readonly />
+    </view>
+    <view class="swiper">
+      <swiper indicator-dots="{{indicatorDots}}"  autoplay="{{autoplay}}">
+        <block wx:for="{{bannerList}}" wx:key="*this">
+            <swiper-item item-id="{{item.id}}">
+            <image src="{{item.banner_img}}" mode="scaleToFill" data-banner-id="{{index}}" bindtap="clickSwiperItem" />
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="list">
+        <view class="recent">最近更新表情包</view>
+        <van-row gutter="4">
+            <van-col span="8" wx:for="{{hotList}}" wx:for-item="item" wx:key="index" bindtap="onItemClick" data-id="{{item.id}}" data-src="{{item.url}}">
+                <van-image src="{{item.url}}" fit="cover" custom-class="image"></van-image>
+            </van-col>
+        </van-row>
+    </view>
 </view>
