@@ -6,7 +6,9 @@
       <swiper indicator-dots="{{indicatorDots}}"  autoplay="{{autoplay}}">
         <block wx:for="{{bannerList}}" wx:key="*this">
             <swiper-item item-id="{{item.id}}">
+              <view class="swiper-item">
             <image src="{{item.banner_img}}" mode="scaleToFill" data-banner-id="{{index}}" bindtap="clickSwiperItem" />
+             </view>
           </swiper-item>
         </block>
       </swiper>

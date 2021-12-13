@@ -19,8 +19,14 @@ const jump = data => {
   if (1 == data.jump_type) { //网页
     url = `/pages/webview/webview?url=${url}`;
   } else if (2 == data.jump_type) {
-    url = `/pages/detail/detail?url=${url}`;
-  }
+    url = data.mini_url;
+  } else if (3 == data.jump_type) {
+    wx.navigateToMiniProgram({
+        appId: data.mini_appid,
+        success(res) {}
+    })
+    return;
+}
 
   wx.navigateTo({
     url: url,
