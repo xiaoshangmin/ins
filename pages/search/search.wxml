@@ -2,7 +2,8 @@
   <!-- 搜索框 -->
   <view class="search-area">
     <van-search value="{{ inputValue }}" placeholder="请输入搜索关键词" shape="round" custom-class="search-class"
-      bind:search="onSearch" bind:change="handleInput">
+      bind:search="onSearch" bind:change="handleInput" use-action-slot>
+      <view slot="action" bind:tap="onSearch">搜索</view>
       <view slot="label" class="label">
         <view class="type" bindtap="onClickType">
           <view class="typename">{{typename}}</view>

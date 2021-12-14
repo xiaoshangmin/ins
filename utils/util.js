@@ -17,7 +17,7 @@ const formatNumber = n => {
 const jump = data => {
   let url = '';
   if (1 == data.jump_type) { //网页
-    url = `/pages/webview/webview?url=${url}`;
+    url = `/pages/webview/webview?url=${data.web_url}`;
   } else if (2 == data.jump_type) {
     url = data.mini_url;
   } else if (3 == data.jump_type) {

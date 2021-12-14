@@ -10,7 +10,7 @@
   width: 70px;
   min-height: 1rpx;
   margin: 10px auto;
-  left: 30rpx;
+  left: 20rpx;
   z-index: 99;
   box-shadow: 0 2px 12px rgb(50 50 51 / 12%);
 }
