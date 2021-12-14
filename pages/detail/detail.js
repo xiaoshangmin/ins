@@ -1,6 +1,7 @@
 const api = require("../../utils/api");
 const session = require("../../utils/session");
 const config = require("../../config");
+let rewardedVideoAd = null;
 Page({
 
   /**
@@ -10,7 +11,7 @@ Page({
     id: 0,
     url: '',
     page_bottom_ad: '',
-    create_ad_id: '',
+    download_reward_ad: '',
   },
   getDetail() {
     let url = config.api.detail + '/' + this.data.id
@@ -32,24 +33,7 @@ Page({
         if (!res.authSetting['scope.writePhotosAlbum']) {
           wx.authorize({
             scope: 'scope.writePhotosAlbum',
-            success: (res) => {
-              // self.downloadFile()
-              wx.showModal({
-                title: '激励提示', // 标题
-                content: '观看视频下载图片', // 内容
-                showCancel: true,
-                confirmText: '确定', // 确定按钮的文案，最多 4 个字符
-                cancelText: '取消', // 取消按钮的文案，最多 4 个字符
-                success: (res) => {
-                  if (res.confirm) {
-                    this.getAd()
-                  }
-                },
-                fail: (res) => {
-
-                },
-              });
-            },
+            success: (res) => {},
             // 拒绝授权时，在下载按钮上面增加打开手机设置按钮
             fail() {
               console.log('拒绝授权')
@@ -57,8 +41,21 @@ Page({
           })
         } else {
           console.log('已经授权')
-          // self.downloadFile()
-          this.getAd()
+          wx.showModal({
+            title: '激励提示', // 标题
+            content: '观看视频下载图片', // 内容
+            showCancel: true,
+            confirmText: '确定', // 确定按钮的文案，最多 4 个字符
+            cancelText: '取消', // 取消按钮的文案，最多 4 个字符
+            success: (res) => {
+              if (res.confirm) {
+                this.showRewardAd()
+              }
+            },
+            fail: (res) => {
+
+            },
+          });
         }
       },
       fail(res) {
@@ -83,47 +80,56 @@ Page({
       }
     })
   },
-  //插屏广告
-  createInterstitialAd() {
-    const interstitialAd = wx.createInterstitialAd({
-      adUnitId: session.get('advertConfig').detail_popup_ad,
-    });
-
-    interstitialAd
-      .load()
-      .then(() => {
-        interstitialAd.show();
+  loadRewardAd() {
+    // 在页面onLoad回调事件中创建激励视频广告实例
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: this.data.download_reward_ad,
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-  getAd() {
-    console.log(this.data.create_ad_id)
-    const videoAd = wx.createRewardedVideoAd({
-      adUnitId: this.data.create_ad_id,
-    });
-    videoAd.onClose(({
-      isEnded
-    }) => {
-      if (isEnded) {
-        // 给予奖励 
-        wx.showToast({
-          title: '正在下载中', // 内容
-          icon: 'none', // 图标
-          success: (res) => {
-            this.downloadFile();
-          },
-          fail: (res) => {
+      rewardedVideoAd.onLoad(() => {
+        console.log('激励视频 广告加载成功')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('激励', err)
+      })
+      rewardedVideoAd.onClose((res) => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励 
+          wx.showToast({
+            title: '正在下载中', // 内容
+            icon: 'none', // 图标
+            success: (res) => {
+              this.downloadFile();
+            },
+            fail: (res) => {
 
-          },
-        });
-      } else {
-        console.log('未看完')
-      }
-    });
-    videoAd.show()
+            },
+          });
+        } else {
+          // 播放中途退出，不下发游戏奖励
+          console.log('未看完')
+        }
+      })
+    }
   },
+  showRewardAd() {
+    // 用户触发广告后，显示激励视频广告
+    if (rewardedVideoAd) {
+      rewardedVideoAd.show().then(() => {
+        console.log('激励视频 广告显示')
+      }).catch(() => {
+        // 失败重试
+        rewardedVideoAd.load()
+          .then(() => videoAd.show())
+          .catch(err => {
+            this.downloadFile();
+            console.log('激励视频 广告显示失败 直接下载')
+          })
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -131,10 +137,10 @@ Page({
     this.setData({
       url: options.url,
       page_bottom_ad: !session.get('advertConfig').detail_bottom_ad ? '' : session.get('advertConfig').detail_bottom_ad,
-      create_ad_id: !session.get('advertConfig').download_reward_ad ? '' : session.get('advertConfig').download_reward_ad,
+      download_reward_ad: !session.get('advertConfig').download_reward_ad ? '' : session.get('advertConfig').download_reward_ad,
     })
-    if (session.get('advertConfig').detail_popup_ad) {
-      this.createInterstitialAd()
+    if (session.get('advertConfig').download_reward_ad) {
+      this.loadRewardAd()
     }
   },
 

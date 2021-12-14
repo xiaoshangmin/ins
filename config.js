@@ -9,7 +9,7 @@ let base_url = `${localhost}/${app_name}/v1`;
 let auth_url = `${localhost}/api/v1`;
 const accountInfo = wx.getAccountInfoSync();
 console.log(accountInfo)
-if (accountInfo.miniProgram.envVersion != "develop") {
+if (accountInfo.miniProgram.envVersion == "develop") {
   base_url = `${alpha_host}/${app_name}/v1`;
   auth_url = `${alpha_host}/api/v1`;
   serve_id = aplha_serve_id
