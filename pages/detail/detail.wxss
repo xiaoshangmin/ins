@@ -22,3 +22,7 @@ page {
   display: flex;
   justify-content: space-around;
 }
+
+.bottom-ad {
+  margin-top: 20rpx;
+}

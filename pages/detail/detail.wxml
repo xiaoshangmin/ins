@@ -12,4 +12,8 @@
         分享给好友
         </van-button>
     </view>
+    <view class="bottom-ad" wx-if="{{page_bottom_ad}}">
+        <ad unit-id="{{page_bottom_ad}}">
+        </ad>
+    </view>
 </view>

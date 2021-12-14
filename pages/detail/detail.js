@@ -1,4 +1,5 @@
 const api = require("../../utils/api");
+const session = require("../../utils/session");
 const config = require("../../config");
 Page({
 
@@ -8,6 +9,8 @@ Page({
   data: {
     id: 0,
     url: '',
+    page_bottom_ad: '',
+    create_ad_id: '',
   },
   getDetail() {
     let url = config.api.detail + '/' + this.data.id
@@ -24,13 +27,28 @@ Page({
     let self = this
     // 相册授权
     wx.getSetting({
-      success(res) {
+      success: (res) => {
         // 进行授权检测，未授权则进行弹层授权
         if (!res.authSetting['scope.writePhotosAlbum']) {
           wx.authorize({
             scope: 'scope.writePhotosAlbum',
-            success() {
-              self.downloadFile() 
+            success: (res) => {
+              // self.downloadFile()
+              wx.showModal({
+                title: '激励提示', // 标题
+                content: '观看视频下载图片', // 内容
+                showCancel: true,
+                confirmText: '确定', // 确定按钮的文案，最多 4 个字符
+                cancelText: '取消', // 取消按钮的文案，最多 4 个字符
+                success: (res) => {
+                  if (res.confirm) {
+                    this.getAd()
+                  }
+                },
+                fail: (res) => {
+
+                },
+              });
             },
             // 拒绝授权时，在下载按钮上面增加打开手机设置按钮
             fail() {
@@ -39,7 +57,8 @@ Page({
           })
         } else {
           console.log('已经授权')
-          self.downloadFile() 
+          // self.downloadFile()
+          this.getAd()
         }
       },
       fail(res) {
@@ -64,14 +83,59 @@ Page({
       }
     })
   },
+  //插屏广告
+  createInterstitialAd() {
+    const interstitialAd = wx.createInterstitialAd({
+      adUnitId: session.get('advertConfig').detail_popup_ad,
+    });
+
+    interstitialAd
+      .load()
+      .then(() => {
+        interstitialAd.show();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  getAd() {
+    console.log(this.data.create_ad_id)
+    const videoAd = wx.createRewardedVideoAd({
+      adUnitId: this.data.create_ad_id,
+    });
+    videoAd.onClose(({
+      isEnded
+    }) => {
+      if (isEnded) {
+        // 给予奖励 
+        wx.showToast({
+          title: '正在下载中', // 内容
+          icon: 'none', // 图标
+          success: (res) => {
+            this.downloadFile();
+          },
+          fail: (res) => {
+
+          },
+        });
+      } else {
+        console.log('未看完')
+      }
+    });
+    videoAd.show()
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.setData({
-      url: options.url
+      url: options.url,
+      page_bottom_ad: !session.get('advertConfig').detail_bottom_ad ? '' : session.get('advertConfig').detail_bottom_ad,
+      create_ad_id: !session.get('advertConfig').download_reward_ad ? '' : session.get('advertConfig').download_reward_ad,
     })
-    // this.getDetail()
+    if (session.get('advertConfig').detail_popup_ad) {
+      this.createInterstitialAd()
+    }
   },
 
   /**
