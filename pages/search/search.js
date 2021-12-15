@@ -29,7 +29,9 @@ Page({
       popup_ad: !session.get('advertConfig').detail_popup_ad ? '' : session.get('advertConfig').detail_popup_ad,
     })
     this.getSearchList()
-    this.loadPopupAd()
+    if (session.get('advertConfig').detail_popup_ad) {
+      this.loadPopupAd()
+    }
   },
   onSearch() {
     // if (!this.data.inputValue) {
