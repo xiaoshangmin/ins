@@ -14,7 +14,12 @@ if (accountInfo.miniProgram.envVersion != "develop") {
   auth_url = `${alpha_host}/api/v1`;
   serve_id = aplha_serve_id
 }
-console.log(base_url,accountInfo)
+if (accountInfo.miniProgram.envVersion == "release") {
+  base_url = `${stable_host}/${app_name}/v1`;
+  auth_url = `${stable_host}/api/v1`;
+  serve_id = aplha_serve_id
+}
+console.log(base_url)
 let config = {
   saas: {
     serve_id,

@@ -1,4 +1,5 @@
 const api = require("../../utils/api");
+const utils = require("../../utils/util");
 const session = require("../../utils/session");
 const config = require("../../config");
 let rewardedVideoAd = null;
@@ -49,7 +50,7 @@ Page({
             cancelText: '取消', // 取消按钮的文案，最多 4 个字符
             success: (res) => {
               if (res.confirm) {
-                this.showRewardAd()
+                utils.showRewardAd(rewardedVideoAd,this.downloadFile)
               }
             },
             fail: (res) => {
@@ -80,55 +81,6 @@ Page({
       }
     })
   },
-  loadRewardAd() {
-    // 在页面onLoad回调事件中创建激励视频广告实例
-    if (wx.createRewardedVideoAd) {
-      rewardedVideoAd = wx.createRewardedVideoAd({
-        adUnitId: this.data.download_reward_ad,
-      })
-      rewardedVideoAd.onLoad(() => {
-        console.log('激励视频 广告加载成功')
-      })
-      rewardedVideoAd.onError((err) => {
-        console.log('激励', err)
-      })
-      rewardedVideoAd.onClose((res) => {
-        // 用户点击了【关闭广告】按钮
-        if (res && res.isEnded) {
-          // 正常播放结束，可以下发游戏奖励 
-          wx.showToast({
-            title: '正在下载中', // 内容
-            icon: 'none', // 图标
-            success: (res) => {
-              this.downloadFile();
-            },
-            fail: (res) => {
-
-            },
-          });
-        } else {
-          // 播放中途退出，不下发游戏奖励
-          console.log('未看完')
-        }
-      })
-    }
-  },
-  showRewardAd() {
-    // 用户触发广告后，显示激励视频广告
-    if (rewardedVideoAd) {
-      rewardedVideoAd.show().then(() => {
-        console.log('激励视频 广告显示')
-      }).catch(() => {
-        // 失败重试
-        rewardedVideoAd.load()
-          .then(() => videoAd.show())
-          .catch(err => {
-            this.downloadFile();
-            console.log('激励视频 广告显示失败 直接下载')
-          })
-      })
-    }
-  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -140,7 +92,7 @@ Page({
       download_reward_ad: !session.get('advertConfig').download_reward_ad ? '' : session.get('advertConfig').download_reward_ad,
     })
     if (session.get('advertConfig').download_reward_ad) {
-      this.loadRewardAd()
+      rewardedVideoAd = utils.loadRewardAd(session.get('advertConfig').download_reward_ad,this.downloadFile)
     }
   },
 

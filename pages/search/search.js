@@ -1,8 +1,8 @@
 // pages/search/search.js
 const api = require("../../utils/api");
 const config = require('../../config');
-const session = require("../../utils/session");
-let interstitialAd = null;
+const utils = require("../../utils/util");
+const session = require("../../utils/session"); 
 Page({
 
   /**
@@ -19,18 +19,14 @@ Page({
     ps: 20,
     list: [],
     list_type: '',
-    popup_ad: '',
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      popup_ad: !session.get('advertConfig').detail_popup_ad ? '' : session.get('advertConfig').detail_popup_ad,
-    })
     this.getSearchList()
     if (session.get('advertConfig').detail_popup_ad) {
-      this.loadPopupAd()
+      utils.loadPopupAd(session.get('advertConfig').detail_popup_ad)
     }
   },
   onSearch() {
@@ -114,30 +110,6 @@ Page({
       typename: name,
       type: type
     })
-  },
-  loadPopupAd() {
-    // 在页面onLoad回调事件中创建插屏广告实例
-    if (wx.createInterstitialAd) {
-      interstitialAd = wx.createInterstitialAd({
-        adUnitId: this.data.popup_ad
-      })
-      interstitialAd.onLoad(() => {
-        console.log('插屏 广告加载成功')
-      })
-      interstitialAd.onError((err) => {
-        console.log('插屏', err)
-      })
-      interstitialAd.onClose(() => {})
-
-      // 在适合的场景显示插屏广告
-      if (interstitialAd) {
-        setTimeout(() => {
-          interstitialAd.show().catch((err) => {
-            console.error(err)
-          })
-        }, 1500)
-      }
-    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

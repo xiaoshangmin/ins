@@ -15,6 +15,7 @@ Page({
   },
   getConfig() {
     api.get(config.api.config).then(res => {
+      console.log(res.data)
       session.set('systemConfig', res.data.system_config);
       session.set('advertConfig', res.data.advert_config);
       session.set('bannerConfig', res.data.banner_config);
