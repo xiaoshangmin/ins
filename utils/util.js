@@ -124,7 +124,7 @@ function loadPopupAd(adId) {
         interstitialAd.show().catch((err) => {
           console.error(err)
         })
-      }, 1500)
+      }, 2000)
     }
   }
 }

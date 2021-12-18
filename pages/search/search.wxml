@@ -22,7 +22,9 @@
       <view class="item" data-type="wallpaper" data-name="壁纸">壁纸</view>
     </view>
   </view>
-
+<view class="video-ad" wx:if="{{search_video_ad}}">
+  <ad unit-id="{{search_video_ad}}" ad-type="video" ad-theme="white"></ad>
+</view>
   <!-- 列表 -->
   <view class="list">
     <view class="row">

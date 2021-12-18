@@ -19,12 +19,16 @@ Page({
     ps: 20,
     list: [],
     list_type: '',
+    search_video_ad:'',
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getSearchList()
+    this.setData({
+      search_video_ad:!session.get('advertConfig').search_video_ad?"":session.get('advertConfig').search_video_ad
+    })
     if (session.get('advertConfig').detail_popup_ad) {
       utils.loadPopupAd(session.get('advertConfig').detail_popup_ad)
     }
