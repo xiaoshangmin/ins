@@ -43,3 +43,4 @@
   <view wx:if="{{finished}}" class="finish">{{finised_text}}</view>
 
 </view>
+<view class="full-screen"></view>

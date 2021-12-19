@@ -1,24 +1,39 @@
 <view class="container">
-    <view bindtap="toSearch">
-        <van-search placeholder="请输入搜索关键词" shape="round" readonly />
-    </view>
-    <view class="swiper">
-      <swiper indicator-dots="{{indicatorDots}}"  autoplay="{{autoplay}}">
-        <block wx:for="{{bannerList}}" wx:key="*this">
-            <swiper-item item-id="{{item.id}}">
-              <view class="swiper-item">
+  <view bindtap="toSearch">
+    <van-search placeholder="请输入搜索关键词" shape="round" readonly />
+  </view>
+  <view class="swiper">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}">
+      <block wx:for="{{bannerList}}" wx:key="*this">
+        <swiper-item item-id="{{item.id}}">
+          <view class="swiper-item">
             <image src="{{item.banner_img}}" mode="aspectFit" data-banner-id="{{index}}" bindtap="clickSwiperItem" />
-             </view>
-          </swiper-item>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <block wx:if="{{category.length > 0}}">
+    <van-tabs active="{{ active }}" sticky bind:change="onChange">
+      <van-tab title="{{item.name}}" name="{{item.id}}" wx:for="{{category}}" wx:key="{{item.id}}">
+        <block wx:if="{{homeList[item.id].length > 0}}">
+          <view class="list">
+            <van-row gutter="4">
+              <van-col span="8" wx:for="{{homeList[item.id]}}" wx:for-item="data" wx:key="index" bindtap="onItemClick" data-id="{{data.id}}" data-src="{{data.url}}">
+                <van-image src="{{data.url}}" fit="cover" custom-class="image"></van-image>
+              </van-col>
+            </van-row>
+            <view class="finish" bindtap="toSearch">点击去搜索更多吧>>></view>
+          </view>
         </block>
-      </swiper>
-    </view>
-    <view class="list">
-        <view class="recent">最近更新表情包</view>
-        <van-row gutter="4">
-            <van-col span="8" wx:for="{{hotList}}" wx:for-item="item" wx:key="index" bindtap="onItemClick" data-id="{{item.id}}" data-src="{{item.url}}">
-                <van-image src="{{item.url}}" fit="cover" custom-class="image"></van-image>
-            </van-col>
-        </van-row>
-    </view>
+        <block wx:else>
+          <van-empty description="暂无数据">
+            <van-button round type="danger" icon="search" class="bottom-button">去搜索更多</van-button>
+          </van-empty>
+        </block>
+      </van-tab>
+    </van-tabs>
+  </block>
 </view>
+<view class="full-screen"></view>

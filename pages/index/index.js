@@ -9,9 +9,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hotList: [], 
+    homeList: [],
+    cateId: 0,
     bannerList: [],
+    category: [],
     finish: false,
+    active: 0,
+  },
+  onChange(event) {
+    this.setData({
+      cateId: event.detail.name
+    })
+    //不存在才拉取
+    if (!this.data.homeList.hasOwnProperty(event.detail.name)) {
+      this.getHomeList()
+    }
+  },
+  getCategory() {
+    api.get(config.api.category).then(res => {
+      console.log(res.data)
+      this.setData({
+        category: res.data,
+        cateId: res.data[0].id
+      })
+      this.getHomeList()
+    })
   },
   getConfig() {
     api.get(config.api.config).then(res => {
@@ -30,12 +52,24 @@ Page({
     let bannerConfig = this.data.bannerList[bannerId]
     console.log(bannerConfig)
     util.jump(bannerConfig)
-},
-  getHotList() {
-    api.get(config.api.hot).then(res => {
+  },
+  getHomeList() {
+    let data = {
+      p: this.data.p,
+      ps: this.data.ps,
+      type: 'emoticon',
+      cateId: this.data.cateId
+    }
+    let list = this.data.homeList;
+    let currentList = list[this.data.cateId] ? list[this.data.cateId] : [];
+    api.post(config.api.list, data, true).then(res => {
       console.log(res)
+      if (res.data.list.length > 0) {
+
+      }
+      list[this.data.cateId] = res.data.list
       this.setData({
-        hotList: res.data
+        homeList: list
       })
     }).catch(res => {
 
@@ -63,9 +97,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) { 
+  onLoad: function (options) {
+    this.getCategory();
     this.getConfig();
-    this.getHotList();
+    // this.getHomeList();
   },
 
   /**

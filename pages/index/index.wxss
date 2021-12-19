@@ -33,3 +33,36 @@
   width: 30vw;
   height: 30vw;
 }
+
+
+.finish {
+  text-align: center; 
+  padding-top: 30rpx;
+  color: rgb(57, 105, 196);
+  display: block;
+  position: relative;
+}
+
+.finish::before {
+  content: ' ';
+  background: #c4bebe;
+  position: absolute;
+  width: 20%;
+  height: 1rpx;
+  top: 65%;
+  left: 6%;
+}
+
+.finish::after {
+  content: ' ';
+  background: #c4bebe;
+  position: absolute;
+  width: 20%;
+  height: 1px;
+  top: 65%;
+  right: 6%;
+}
+
+.full-screen{
+  padding-bottom: 32rpx;
+}

@@ -143,3 +143,6 @@
   top: 65%;
   right: 11%;
 }
+.full-screen{
+  padding-bottom: 32rpx;
+}
