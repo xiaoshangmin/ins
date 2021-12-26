@@ -19,12 +19,14 @@
       <van-tab title="{{item.name}}" name="{{item.id}}" wx:for="{{category}}" wx:key="{{item.id}}">
         <block wx:if="{{homeList[item.id].length > 0}}">
           <view class="list">
-            <van-row gutter="4">
+            <van-row>
               <van-col span="8" wx:for="{{homeList[item.id]}}" wx:for-item="data" wx:key="index" bindtap="onItemClick" data-id="{{data.id}}" data-src="{{data.url}}">
                 <van-image src="{{data.url}}" fit="cover" custom-class="image"></van-image>
               </van-col>
             </van-row>
-            <view class="finish" bindtap="toSearch">点击去搜索更多吧>>></view>
+            <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 13px;" hairline  bindtap="toSearch">
+              点击去搜索更多吧>>>
+            </van-divider>
           </view>
         </block>
         <block wx:else>
@@ -36,4 +38,3 @@
     </van-tabs>
   </block>
 </view>
-<view class="full-screen"></view>

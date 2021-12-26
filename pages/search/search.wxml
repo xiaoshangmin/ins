@@ -1,8 +1,7 @@
 <view class="container">
   <!-- 搜索框 -->
   <view class="search-area">
-    <van-search value="{{ inputValue }}" placeholder="请输入搜索关键词" shape="round" custom-class="search-class"
-      bind:search="onSearch" bind:change="handleInput" use-action-slot>
+    <van-search value="{{ inputValue }}" placeholder="请输入搜索关键词" shape="round" custom-class="search-class" bind:search="onSearch" bind:change="handleInput" use-action-slot>
       <view slot="action" bind:tap="onSearch">搜索</view>
       <view slot="label" class="label">
         <view class="type" bindtap="onClickType">
@@ -22,25 +21,25 @@
       <view class="item" data-type="wallpaper" data-name="壁纸">壁纸</view>
     </view>
   </view>
-<view class="video-ad" wx:if="{{search_video_ad}}">
-  <ad unit-id="{{search_video_ad}}" ad-type="video" ad-theme="white"></ad>
-</view>
+  <view class="video-ad" wx:if="{{search_video_ad}}">
+    <ad unit-id="{{search_video_ad}}" ad-type="video" ad-theme="white"></ad>
+  </view>
   <!-- 列表 -->
   <view class="list">
     <view class="row">
       <van-row gutter="4">
         <van-col span="8" wx:for="{{list}}" wx:for-item="item" wx:key="index">
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'wallpaper'}}" custom-class="wallpaper"  data-id="{{item.id}}" data-src="{{item.url}}"
-            bindtap="onWallpaperItemClick">
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'wallpaper'}}" custom-class="wallpaper" data-id="{{item.id}}" data-src="{{item.url}}" bindtap="onWallpaperItemClick">
           </van-image>
-          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'feel' || list_type=='avatar'}}"  data-id="{{item.id}}" data-src="{{item.url}}"
-            custom-class="image" bindtap="onItemClick"></van-image>
+          <van-image src="{{item.url}}" fit="cover" wx:if="{{list_type == 'feel' || list_type=='avatar'}}" data-id="{{item.id}}" data-src="{{item.url}}" custom-class="image" bindtap="onItemClick"></van-image>
         </van-col>
       </van-row>
     </view>
   </view>
 
-  <view wx:if="{{finished}}" class="finish">{{finised_text}}</view>
-
+  <block wx:if="{{finished}}">
+    <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 13px;" hairline bindtap="toSearch">
+      {{finised_text}}
+    </van-divider>
+  </block>
 </view>
-<view class="full-screen"></view>

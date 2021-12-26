@@ -13,7 +13,11 @@ if (accountInfo.miniProgram.envVersion == "develop") {
   base_url = `${localhost}/${app_name}/v1`;
   auth_url = `${localhost}/api/v1`;
 }
-
+if (accountInfo.miniProgram.envVersion == "release" 
+|| accountInfo.miniProgram.envVersion == "trial") {
+  base_url = `${stable_host}/${app_name}/v1`;
+  auth_url = `${stable_host}/api/v1`;
+}
 console.log(base_url)
 let config = {
   saas: {

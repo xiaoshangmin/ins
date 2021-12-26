@@ -31,7 +31,7 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "useIsolateContext": false,
+    "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
@@ -43,7 +43,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.20.1",
-  "appid": "wxe794fd1351cbaf27",
+  "appid": "wx9e7b38d98e8bc248",
   "projectname": "Instagram",
   "debugOptions": {
     "hidedInDevtools": []
