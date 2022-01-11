@@ -13,7 +13,7 @@
       </block>
     </swiper>
   </view>
-
+  <van-notice-bar left-icon="volume-o" text="添加[Feb20X]咨询获取当前流量主变现小程序"/>
   <block wx:if="{{category.length > 0}}">
     <van-tabs active="{{ active }}" sticky bind:change="onChange">
       <van-tab title="{{item.name}}" name="{{item.id}}" wx:for="{{category}}" wx:key="id">
@@ -24,7 +24,7 @@
                 <van-image src="{{data.url}}" fit="cover" custom-class="image"></van-image>
               </van-col>
             </van-row>
-            <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 13px;" hairline  bindtap="toSearch">
+            <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 13px;" hairline bindtap="toSearch">
               点击去搜索更多吧>>>
             </van-divider>
           </view>

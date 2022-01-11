@@ -74,7 +74,7 @@ Page({
           success: function (fres) {
             console.log(fres)
             wx.showToast({
-              title: 'ok',
+              title: '已下载完成',
             })
           }
         })

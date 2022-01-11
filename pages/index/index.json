@@ -9,6 +9,7 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-button": "@vant/weapp/button/index",
     "van-divider": "@vant/weapp/divider/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-empty": "@vant/weapp/empty/index"
   }
 }
